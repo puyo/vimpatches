@@ -1,0 +1,86 @@
+*child.txt*   For Vim version 7.1.  Last change: 2008 Feb 29
+
+
+		  VIM REFERENCE MANUAL    by Mike Gevaert
+
+
+Spawning children processes with Vim		*child*
+
+This document describes how to spawn and interact with child processes within
+vim.
+
+1.  Children introduction
+2.  Children related commands
+
+==============================================================================
+1.  Children introduction			*child-intro*
+
+Both unix-like and Win32 allow for standard console applications to have their
+STDIN, STDOUT, and STDERR streams to be captured and redirected.  These
+abilities are used by the |filter| family of commands.  However, sometimes,
+the target program must be left open across mutiple invocations, instead of
+being repeatedly invoked.  To accomplish this, a child process is spawned, and
+its STDIN can be written to, and its STDOUT and STDERR can be read.  Each
+buffer can be associated with multiple instances of processes.
+
+==============================================================================
+2.  Children related commands			*child-commands*
+
+  child_fork
+     USAGE :call child_fork({name}, {command})
+     Forks a new child associated with current buffer of {name}.  The
+     {command} can include arguments, and must either be a full path, or be
+     within the searchable path.
+
+     EXAMPLE
+      :call child_fork("cat", "/usr/bin/cat")
+
+  child_kill
+      USAGE :call child_kill({name})
+      Kills the child of {name} in the current buffer
+
+      EXAMPLE
+       :call child_kill("cat")
+
+  child_list
+      USAGE :call child_list()
+      Lists the children associated with current buffer
+
+      EXAMPLE
+      :call child_list()
+
+  child_read_lines
+      USAGE :call child_read_lines({name})
+      Read the STDOUT of the child {name} into the current buffer.  All lines
+      read are appended to the current buffer, starting at the current line.
+      Only completed lines (ones with a "\n") are appended, to avoid reading
+      in prompts and the like.
+      Will return with a message if nothing is read.
+
+      EXAMPLE
+      :call child_read_lines("cat")
+
+  child_read_stderr 
+      USAGE :call child_read_stderr({name})
+      Read the STDERR of the child {name}.  Operates like child_read_lines
+
+      EXAMPLE
+      :call child_read_stderr("cat")
+
+  child_write_line
+      USAGE :call child_write_line({name})
+      Write the line on which the cursor currently resides to child {name}.
+      If you want to write multiple lines, simply move the cursor to those
+      lines.
+
+      EXAMPLE
+      :call child_write_line("cat")
+
+      To write multiple lines:
+	 for i in range(start, end)
+	       :call cursor(i,0)
+	       :call child_write_line("cat")
+	 endfor
+
+==============================================================================
+ vim:tw=78:ts=8:ft=help:norl:

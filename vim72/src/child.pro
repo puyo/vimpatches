@@ -1,0 +1,11 @@
+CHILD * find_child_by_name __ARGS(( BUF *, char_u * ));
+void kill_all_childs __ARGS(( BUF * ));
+int list_childs __ARGS(( BUF * ));
+int child_read_async __ARGS(( CHILD * ));
+void child_read_stderr __ARGS(( CHILD * ));
+int child_set_line __ARGS(( BUF *, linenr_T, char_u * ));
+int child_append_line __ARGS(( BUF *, linenr_T, char_u *, colnr_T ));
+int child_delete_line __ARGS(( BUF *, linenr_T ));
+char_u *child_get_line __ARGS(( BUF *, linenr_T ));
+int write_line_to_child __ARGS(( CHILD *, char_u *));
+int read_line_fm_child  __ARGS(( CHILD *));
