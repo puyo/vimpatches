@@ -1,0 +1,10 @@
+This is a patch to vim that Mike Gevaert sent me via email when I expressed
+interest in subprocess management in vim. I am now sharing it so that
+potentially it can be hammered into shape and be used to implement subprocess
+management in vim.
+
+Subprocess management can be used for:
+
+* background compilation (hit compile and keep working)
+* integrated debugging (like emacs' GUD)
+* running terminals and other programs without blocking or exiting vim
